@@ -29,7 +29,28 @@ if (typeof gsap === 'undefined') {
 
 gsap.registerPlugin(ScrollTrigger);
 
-var NO_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* A preferência do sistema é o padrão; a escolha feita no site vence sobre
+   ela e fica guardada. Ler isto antes de tudo importa: `NO_MOTION` decide
+   o que chega a ser criado mais abaixo. */
+var MOTION_KEY = 'iment-motion';
+var _escolha = null;
+try { _escolha = localStorage.getItem(MOTION_KEY); } catch (e) { _escolha = null; }
+
+var NO_MOTION = _escolha ? _escolha === 'off'
+                         : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.documentElement.setAttribute('data-motion', NO_MOTION ? 'off' : 'on');
+
+(function() {
+  var botao = document.getElementById('motion-toggle');
+  if (!botao) return;
+  botao.addEventListener('click', function() {
+    try { localStorage.setItem(MOTION_KEY, NO_MOTION ? 'on' : 'off'); } catch (e) {}
+    /* Recarrega em vez de ligar na hora: metade das animações só existe se
+       `NO_MOTION` for falso no carregamento, e montá-las com a página já
+       rolada deixaria elementos presos no estado inicial. */
+    location.reload();
+  });
+})();
 var isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 /* ── Theme toggle ─────────────────────────────────────────── */
@@ -152,7 +173,7 @@ if (!NO_MOTION) {
   }
 
   /* ── Hero entrance ────────────────────────────────────── */
-  var heroTl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+  var heroTl = gsap.timeline({ defaults: { ease: 'power4.out' }, paused: true });
   heroTl
     .from('.cover-id > *', {
       opacity: 0, x: -14,
@@ -174,72 +195,6 @@ if (!NO_MOTION) {
       opacity: 0, y: 10,
       stagger: 0.07, duration: 0.5,
     }, '-=0.6');
-
-  /* ── Orbital ecosystem animation ─────────────────────── */
-  /* Os nós percorrem exatamente o anel tracejado maior, e não um raio
-     arbitrário: a trilha fica visível e o movimento se lê. As medidas são
-     recalculadas em cada quadro, então mudar o tamanho da janela não
-     desmonta a órbita como acontecia antes. */
-  var _ecoVis = document.querySelector('.eco-visual');
-  var _ring1  = document.querySelector('.eco-ring-1');
-  var nodes   = [
-    document.getElementById('node-0'),
-    document.getElementById('node-1'),
-    document.getElementById('node-2'),
-  ].filter(Boolean);
-  var OFFSETS = [0, (Math.PI * 2) / 3, (Math.PI * 4) / 3];
-
-  if (_ecoVis && nodes.length) {
-    /* Tira o canto superior esquerdo do cálculo: sem isso cada nó orbita
-       num raio diferente, porque as etiquetas têm larguras diferentes. */
-    gsap.set(nodes, { xPercent: -50, yPercent: -50 });
-
-    var linesSvg = document.getElementById('eco-lines');
-    var lineEls  = nodes.map(function() {
-      var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      line.setAttribute('stroke', 'oklch(0.55 0.22 248 / 0.22)');
-      line.setAttribute('stroke-width', '1');
-      line.setAttribute('stroke-dasharray', '4 6');
-      if (linesSvg) linesSvg.appendChild(line);
-      return line;
-    });
-
-    function medidas() {
-      var lado = _ecoVis.offsetWidth || 440;
-      return {
-        cx: lado / 2,
-        cy: (_ecoVis.offsetHeight || lado) / 2,
-        r: (_ring1 ? _ring1.offsetWidth : lado * 0.86) / 2,
-      };
-    }
-
-    var m = medidas();
-    window.addEventListener('resize', function() { m = medidas(); });
-
-    if (linesSvg) {
-      linesSvg.setAttribute('viewBox', '0 0 ' + (m.cx * 2) + ' ' + (m.cy * 2));
-    }
-
-    gsap.ticker.add(function(time) {
-      nodes.forEach(function(node, i) {
-        var angle = time * 0.25 + OFFSETS[i];
-        var nx = m.cx + Math.cos(angle) * m.r;
-        var ny = m.cy + Math.sin(angle) * m.r;
-        gsap.set(node, { x: nx - m.cx, y: ny - m.cy });
-        lineEls[i].setAttribute('x1', m.cx);
-        lineEls[i].setAttribute('y1', m.cy);
-        lineEls[i].setAttribute('x2', nx);
-        lineEls[i].setAttribute('y2', ny);
-      });
-      gsap.set('.eco-ring-2', { rotation: -(time * 5) });
-      gsap.set('.eco-ring-3', { rotation: time * 9 });
-    });
-
-    gsap.to('#eco-glow', {
-      scale: 1.4, opacity: 0,
-      duration: 2.2, repeat: -1, ease: 'power2.out',
-    });
-  }
 
   /* ── Manifesto ────────────────────────────────────────── */
   /* Quebra o texto em palavras sem destruir o <em> de dentro: só os nós de
@@ -277,12 +232,58 @@ if (!NO_MOTION) {
       scrollTrigger: { trigger: '#manifesto', start: 'top 72%' },
     });
   }
+  /* As três frentes acendem como um LED que desce e volta, em laço próprio.
+     Antes isso dependia do scroll: quem parasse de rolar via a animação
+     parar junto, e quem já tivesse passado nunca mais via nada. */
+  (function() {
+    var frentes = document.querySelectorAll('.frente');
+    var trilho  = document.querySelector('.frentes-trilho');
+    var fill    = document.querySelector('.frentes-fill');
+    var led     = document.querySelector('.frentes-led');
+    if (!frentes.length || !trilho || !fill || !led) return;
+
+    function alturas() {
+      var base = trilho.getBoundingClientRect().top;
+      return Array.prototype.map.call(frentes, function(f) {
+        var p = f.querySelector('.frente-ponto').getBoundingClientRect();
+        return (p.top + p.height / 2 - base) / trilho.offsetHeight;
+      });
+    }
+    var marcas = alturas();
+    window.addEventListener('resize', function() { marcas = alturas(); });
+
+    /* Começa já acesa na primeira marca e nunca volta ao zero: um instante
+       com o trilho inteiro apagado parece defeito, não pausa. */
+    var passo = { p: marcas[0] };
+    gsap.to(passo, {
+      p: 1,
+      duration: 2.8,
+      ease: 'sine.inOut',
+      repeat: -1,
+      yoyo: true,
+      repeatDelay: 0.25,
+      onUpdate: function() {
+        gsap.set(fill, { scaleY: passo.p });
+        gsap.set(led, { y: passo.p * trilho.offsetHeight, opacity: passo.p > 0.01 ? 1 : 0 });
+        frentes.forEach(function(f, i) {
+          f.classList.toggle('on', passo.p >= marcas[i] - 0.015);
+        });
+      },
+    });
+
+    gsap.from('.frente', {
+      x: -16, opacity: 0,
+      stagger: 0.12, duration: 0.7, ease: 'power3.out',
+      scrollTrigger: { trigger: '.frentes', start: 'top 86%' },
+    });
+  })();
+
   gsap.from('.manifesto-sub', {
     opacity: 0, y: 20, duration: 0.8,
     delay: 0.15, ease: 'power3.out',
     scrollTrigger: { trigger: '#manifesto', start: 'top 70%' },
   });
-  gsap.from('.manifesto-side .label, .manifesto-side .side-line', {
+  gsap.from('.manifesto-side .label', {
     opacity: 0, x: -18,
     stagger: 0.15, duration: 0.7, ease: 'power3.out',
     scrollTrigger: { trigger: '#manifesto', start: 'top 72%' },
@@ -306,23 +307,23 @@ if (!NO_MOTION) {
   });
 
   /* ── Parceria ─────────────────────────────────────────── */
-  gsap.from('.parceria-head', {
-    y: 32, opacity: 0, duration: 0.8, ease: 'power3.out',
-    scrollTrigger: { trigger: '#parceria', start: 'top 76%' },
+  gsap.from('.arq-lede', {
+    y: 22, opacity: 0, duration: 0.8, ease: 'power3.out',
+    scrollTrigger: { trigger: '.arq-lede', start: 'top 86%' },
   });
-  gsap.from('.reason', {
-    y: 36, opacity: 0,
-    stagger: 0.14, duration: 0.8, ease: 'power3.out',
-    scrollTrigger: { trigger: '.reasons-grid', start: 'top 78%' },
+  gsap.from('.camada', {
+    y: 44, opacity: 0, scale: 0.97,
+    stagger: 0.14, duration: 0.85, ease: 'power3.out',
+    scrollTrigger: { trigger: '.arq-camadas', start: 'top 84%' },
   });
-  document.querySelectorAll('.reason-num').forEach(function(el, i) {
-    var t = parseInt(el.dataset.target, 10);
-    var c = { val: 0 };
-    gsap.to(c, {
-      val: t, duration: 1.4, delay: i * 0.14, ease: 'power2.out',
-      onUpdate: function() { el.textContent = String(Math.round(c.val)).padStart(2, '0'); },
-      scrollTrigger: { trigger: '.reasons-grid', start: 'top 78%', toggleActions: 'play none none none' },
-    });
+  gsap.from('.arq-nota', {
+    y: 24, opacity: 0, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: '.arq-nota', start: 'top 90%' },
+  });
+  gsap.from('.camada-itens li', {
+    y: 24, opacity: 0,
+    stagger: 0.08, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: '.arq-camadas', start: 'top 78%' },
   });
 
   /* ── FAQ ──────────────────────────────────────────────── */
@@ -376,18 +377,51 @@ if (!NO_MOTION) {
   /* ── Faixa de tecnologias ─────────────────────────────── */
   var techTrack = document.getElementById('techbar-track');
   if (techTrack) {
-    /* Os dois conjuntos são idênticos, então -50% volta exatamente ao começo. */
-    var marquee = gsap.to(techTrack, {
-      xPercent: -50, duration: 30, ease: 'none', repeat: -1,
+    var techbar = document.querySelector('.techbar');
+    var molde   = techTrack.querySelector('.techbar-set');
+    var marquee = null;
+
+    /* Dois conjuntos bastavam numa tela estreita, mas numa tela larga a
+       largura somada ficava menor que o dobro da janela: no meio do laço
+       sobrava um vão à direita. Aqui a faixa é clonada até cobrir duas
+       telas com folga de um conjunto, e o passo do laço é a largura exata
+       de um conjunto — assim o ponto final é visualmente igual ao inicial,
+       com quantas cópias forem necessárias. */
+    function montar() {
+      if (marquee) marquee.kill();
+      gsap.set(techTrack, { x: 0 });
+
+      var passo = molde.offsetWidth;
+      if (!passo) return;
+
+      var precisa = window.innerWidth * 2 + passo;
+      while (techTrack.scrollWidth < precisa) {
+        techTrack.appendChild(molde.cloneNode(true));
+      }
+
+      marquee = gsap.to(techTrack, {
+        x: -passo,
+        duration: passo / 46,   /* velocidade constante, não duração fixa */
+        ease: 'none',
+        repeat: -1,
+      });
+    }
+
+    montar();
+    window.addEventListener('load', montar);
+
+    var remontar;
+    window.addEventListener('resize', function() {
+      clearTimeout(remontar);
+      remontar = setTimeout(montar, 200);
     });
 
-    var techbar = document.querySelector('.techbar');
     if (techbar && isHoverDevice) {
       techbar.addEventListener('mouseenter', function() {
-        gsap.to(marquee, { timeScale: 0.2, duration: 0.5 });
+        if (marquee) gsap.to(marquee, { timeScale: 0.2, duration: 0.5 });
       });
       techbar.addEventListener('mouseleave', function() {
-        gsap.to(marquee, { timeScale: 1, duration: 0.5 });
+        if (marquee) gsap.to(marquee, { timeScale: 1, duration: 0.5 });
       });
     }
   }
@@ -472,6 +506,19 @@ if (!NO_MOTION) {
     scrollTrigger: { trigger: '.projetos-lede', start: 'top 88%' },
   });
 
+  /* Flutuação do ícone: `yPercent` e `rotate` em tweens próprios, enquanto a
+     entrada usa `y`. São componentes distintos do mesmo transform, então o
+     GSAP resolve os dois sem que um apague o outro. Durações diferentes
+     evitam o vaivém mecânico de ida e volta sincronizadas. */
+  gsap.to('.project-icone', {
+    yPercent: -7, duration: 3.4,
+    repeat: -1, yoyo: true, ease: 'sine.inOut',
+  });
+  gsap.to('.project-icone', {
+    rotate: 2.5, duration: 5.1,
+    repeat: -1, yoyo: true, ease: 'sine.inOut',
+  });
+
   gsap.from('.project-head > *', {
     y: 30, opacity: 0,
     stagger: 0.12, duration: 0.9, ease: 'power3.out',
@@ -501,11 +548,21 @@ if (!NO_MOTION) {
     y: 28, opacity: 0, duration: 0.75, ease: 'power3.out',
     scrollTrigger: { trigger: '#processo', start: 'top 78%' },
   });
-  gsap.from('.step', {
-    y: 34, opacity: 0,
-    stagger: 0.12, duration: 0.8, ease: 'power3.out',
-    scrollTrigger: { trigger: '.steps', start: 'top 82%' },
+  var entradaEtapas = gsap.timeline({
+    scrollTrigger: { trigger: '.steps', start: 'top 84%' },
   });
+  entradaEtapas
+    .from('.step-card', {
+      y: 40, opacity: 0, scale: 0.97,
+      stagger: 0.12, duration: 0.85, ease: 'power3.out',
+    })
+    /* `fromTo` em vez de `from`: o CSS muda a escala do ponto quando a etapa
+       acende, então um `from` podia gravar essa escala transitória como
+       destino e deixar o ponto encolhido para sempre. */
+    .fromTo('.step-dot',
+      { scale: 0, opacity: 0 },
+      { scale: 1, opacity: 1, stagger: 0.12, duration: 0.5, ease: 'back.out(2.2)', clearProps: 'transform' },
+      '-=0.95');
 
   /* ── Parallax: celular e Theo ─────────────────────────── */
   gsap.to('.theo-img', {
@@ -544,6 +601,168 @@ if (!NO_MOTION) {
   }
 
 } /* end !NO_MOTION */
+
+
+/* ══════════════════════════════════════════════════════════ */
+/* Capa de entrada                                            */
+/* ══════════════════════════════════════════════════════════ */
+(function() {
+  var capa = document.getElementById('capa');
+  if (!capa) return;
+
+  function sair() {
+    capa.classList.add('saiu');
+    document.body.style.overflow = '';
+  }
+
+  /* Com movimento reduzido a capa não entra em cena: uma tela cheia parada
+     entre a pessoa e o site seria um obstáculo, não uma abertura. */
+  if (NO_MOTION || !window.gsap) { sair(); return; }
+
+  /* Trava a rolagem enquanto a capa está na frente, senão dá para rolar o
+     site por baixo dela e chegar ao meio da página já rolado. */
+  document.body.style.overflow = 'hidden';
+
+  var tl = gsap.timeline({
+    onComplete: function() {
+      sair();
+      if (window.heroTl) heroTl.play();
+      if (window.ScrollTrigger) ScrollTrigger.refresh();
+    },
+  });
+
+  /* O hexágono se desenha em vez de aparecer pronto, as ondas saem dele
+     como um pulso, as letras sobem girando em torno do eixo horizontal e a
+     capa fecha num círculo que encolhe até sumir, em vez de deslizar. */
+  tl.from('.capa-logo-caixa', {
+      scale: 0, rotation: -120,
+      duration: 1, ease: 'back.out(1.6)',
+    })
+    .fromTo('.capa-logo-hex',
+      { strokeDashoffset: 100 },
+      { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut' }, '-=0.5')
+    .to('.capa-ondas span', {
+      keyframes: [
+        { scale: 0.6, opacity: 0.9, duration: 0.01 },
+        { scale: 3.2, opacity: 0, duration: 1.6, ease: 'power2.out' },
+      ],
+      stagger: 0.28,
+    }, '-=0.75')
+    .from('.capa-nome span', {
+      yPercent: 120, rotateX: -90, opacity: 0,
+      transformOrigin: '50% 100%',
+      stagger: 0.075, duration: 0.8, ease: 'power4.out',
+    }, '-=1.5')
+    .from('.capa-claim', { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.3')
+    .from('.capa-slogan', { opacity: 0, letterSpacing: '0.6em', duration: 0.7, ease: 'power2.out' }, '-=0.4')
+    .from('.capa-frentes li', { y: 14, opacity: 0, stagger: 0.09, duration: 0.45, ease: 'power3.out' }, '-=0.4')
+    .to('.capa-barra-fill', { scaleX: 1, duration: 0.9, ease: 'power2.inOut' }, '-=0.5')
+    .to('.capa-inner', { scale: 1.12, opacity: 0, duration: 0.55, ease: 'power2.in' }, '+=0.1')
+    .to(capa, { clipPath: 'circle(0% at 50% 50%)', duration: 0.95, ease: 'power3.inOut' }, '-=0.35');
+})();
+
+
+/* ══════════════════════════════════════════════════════════ */
+/* Processo com movimento reduzido                            */
+/* ══════════════════════════════════════════════════════════ */
+/* O trilho e os pontos são acesos pelo scroll. Sem animação esse gatilho
+   não roda, e a seção ficava com tudo apagado, como se o processo não
+   tivesse acontecido. Aqui o estado final é aplicado de uma vez. */
+if (NO_MOTION) {
+  var fillFrentes = document.querySelector('.frentes-fill');
+  if (fillFrentes) fillFrentes.style.transform = 'scaleY(1)';
+  document.querySelectorAll('.frente').forEach(function(f) { f.classList.add('on'); });
+
+  var trilhoFeito = document.getElementById('steps-rail-fill');
+  if (trilhoFeito) trilhoFeito.style.transform = 'scaleX(1)';
+  document.querySelectorAll('.step').forEach(function(s) { s.classList.add('on'); });
+}
+
+
+/* ══════════════════════════════════════════════════════════ */
+/* Órbita da capa — fora do guarda de movimento               */
+/* ══════════════════════════════════════════════════════════ */
+/* Posicionar não é animar: com movimento reduzido os nós precisam estar
+   no lugar certo, só que parados. Por isso este bloco vive fora do guarda
+   e só o laço contínuo lá dentro é que fica condicionado. */
+/* ── Orbital ecosystem animation ─────────────────────── */
+/* Os nós percorrem exatamente o anel tracejado maior, e não um raio
+   arbitrário: a trilha fica visível e o movimento se lê. As medidas são
+   recalculadas em cada quadro, então mudar o tamanho da janela não
+   desmonta a órbita como acontecia antes. */
+var _ecoVis = document.querySelector('.eco-visual');
+var _ring1  = document.querySelector('.eco-ring-1');
+var nodes   = [
+  document.getElementById('node-0'),
+  document.getElementById('node-1'),
+  document.getElementById('node-2'),
+].filter(Boolean);
+var OFFSETS = [0, (Math.PI * 2) / 3, (Math.PI * 4) / 3];
+
+if (_ecoVis && nodes.length) {
+  /* Tira o canto superior esquerdo do cálculo: sem isso cada nó orbita
+     num raio diferente, porque as etiquetas têm larguras diferentes. */
+  gsap.set(nodes, { xPercent: -50, yPercent: -50 });
+
+  var linesSvg = document.getElementById('eco-lines');
+  var lineEls  = nodes.map(function() {
+    var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('stroke', 'oklch(0.55 0.22 248 / 0.22)');
+    line.setAttribute('stroke-width', '1');
+    line.setAttribute('stroke-dasharray', '4 6');
+    if (linesSvg) linesSvg.appendChild(line);
+    return line;
+  });
+
+  function medidas() {
+    var lado = _ecoVis.offsetWidth || 440;
+    return {
+      cx: lado / 2,
+      cy: (_ecoVis.offsetHeight || lado) / 2,
+      r: (_ring1 ? _ring1.offsetWidth : lado * 0.86) / 2,
+    };
+  }
+
+  var m = medidas();
+  window.addEventListener('resize', function() { m = medidas(); });
+
+  if (linesSvg) {
+    linesSvg.setAttribute('viewBox', '0 0 ' + (m.cx * 2) + ' ' + (m.cy * 2));
+  }
+
+  function posicionar(time) {
+    nodes.forEach(function(node, i) {
+      var angle = time * 0.25 + OFFSETS[i];
+      var nx = m.cx + Math.cos(angle) * m.r;
+      var ny = m.cy + Math.sin(angle) * m.r;
+      gsap.set(node, { x: nx - m.cx, y: ny - m.cy });
+      lineEls[i].setAttribute('x1', m.cx);
+      lineEls[i].setAttribute('y1', m.cy);
+      lineEls[i].setAttribute('x2', nx);
+      lineEls[i].setAttribute('y2', ny);
+    });
+  }
+
+  /* Com movimento reduzido os nós ficam parados, mas no lugar certo: sobre
+     o anel, repartidos. Antes a posição só era calculada dentro do laço de
+     animação, então quem desliga animação no sistema via os três
+     empilhados no centro — parado e errado, em vez de só parado. */
+  posicionar(0);
+
+  if (!NO_MOTION) {
+    gsap.ticker.add(function(time) {
+      posicionar(time);
+      gsap.set('.eco-ring-2', { rotation: -(time * 5) });
+      gsap.set('.eco-ring-3', { rotation: time * 9 });
+    });
+
+    gsap.to('#eco-glow', {
+      scale: 1.4, opacity: 0,
+      duration: 2.2, repeat: -1, ease: 'power2.out',
+    });
+  }
+}
+
 
 
 /* ══════════════════════════════════════════════════════════ */
@@ -703,6 +922,23 @@ if (!NO_MOTION) {
     var barra = nav.querySelector('.rail-bar-fill');
     var btns  = nav.querySelectorAll('.rail-btn');
 
+    /* O destaque vai no `.rail-card` e o relevo no `.rail-frame`: elementos
+       diferentes, então a aproximação e a inclinação não disputam o mesmo
+       `transform`. A peça escolhida vem para frente para poder ser lida de
+       perto, e sobe de camada para passar por cima das vizinhas. */
+    var ultimoSel = -1;
+    function destacar(i) {
+      if (i === ultimoSel) return;
+      ultimoSel = i;
+      cards.forEach(function(c, k) {
+        var sel = k === i;
+        c.classList.toggle('no-centro', sel);
+        var destino = { scale: sel ? 1.09 : 1, y: sel ? -10 : 0 };
+        if (NO_MOTION) gsap.set(c, destino);
+        else gsap.to(c, Object.assign({ duration: 0.55, ease: 'power3.out' }, destino));
+      });
+    }
+
     function marcar() {
       var c = curso();
       var p = c ? rail.scrollLeft / c : 0;
@@ -711,6 +947,8 @@ if (!NO_MOTION) {
       var i = noInicio ? 0 : noFim ? cards.length - 1 : indice();
       atual.textContent = ('0' + (i + 1)).slice(-2);
       barra.style.transform = 'scaleX(' + Math.max(0.04, p) + ')';
+
+      destacar(i);
       btns[0].disabled = noInicio;
       btns[1].disabled = noFim;
     }
@@ -726,8 +964,71 @@ if (!NO_MOTION) {
       b.addEventListener('click', function() { irPara(indice() + Number(b.dataset.dir)); });
     });
 
-    rail.addEventListener('scroll', marcar, { passive: true });
-    window.addEventListener('resize', marcar);
+    /* ── Relevo ao passar as telas ─────────────────────── */
+    /* Cada aparelho gira e encolhe conforme se afasta do centro do trilho,
+       e a legenda apaga junto. A transformação vai no `.rail-frame`, não no
+       `.rail-card`: o cartão é do GSAP desde a animação de entrada, e dois
+       donos do mesmo `transform` brigam. */
+    var frames = [];
+    cards.forEach(function(card) {
+      frames.push({
+        card:  card,
+        frame: card.querySelector('.rail-frame'),
+        cap:   card.querySelector('.rail-cap'),
+      });
+    });
+
+    var pedido = null;
+    function relevo() {
+      pedido = null;
+      var meio = rail.clientWidth / 2;
+      var base = rail.getBoundingClientRect().left;
+
+      frames.forEach(function(f) {
+        if (!f.frame) return;
+        var b = f.card.getBoundingClientRect();
+        var centro = b.left + b.width / 2 - base;
+        var d = (centro - meio) / meio;            /* -1 à esquerda, 1 à direita */
+        var dd = Math.min(1, Math.abs(d));
+
+        f.frame.style.transform =
+          'perspective(1400px) rotateY(' + (-d * 13).toFixed(2) + 'deg)' +
+          ' scale(' + (1 - dd * 0.12).toFixed(3) + ')' +
+          ' translateY(' + (dd * 18).toFixed(1) + 'px)';
+        f.frame.style.opacity = (1 - dd * 0.3).toFixed(3);
+        if (f.cap) f.cap.style.opacity = (1 - dd * 0.6).toFixed(3);
+      });
+    }
+    function pedirRelevo() {
+      /* Com movimento reduzido o relevo não entra nem ao rolar: girar e
+         encolher as peças é exatamente o tipo de movimento que a pessoa
+         pediu para não ver. */
+      if (NO_MOTION || pedido !== null) return;
+      pedido = requestAnimationFrame(relevo);
+    }
+
+    /* A animação de entrada também anima a escala dos cartões. Como o
+       destaque da primeira peça é aplicado antes dela terminar, a entrada
+       sobrescrevia e a peça 01 ficava sem a aproximação. Reaplicar depois
+       resolve, e `ultimoSel` precisa ser zerado para não ser ignorado. */
+    if (window.ScrollTrigger && !NO_MOTION) {
+      ScrollTrigger.create({
+        trigger: rail,
+        start: 'top 85%',
+        once: true,
+        onEnter: function() {
+          gsap.delayedCall(1.5, function() { ultimoSel = -1; marcar(); });
+        },
+      });
+    }
+
+    rail.addEventListener('scroll', function() { marcar(); pedirRelevo(); }, { passive: true });
+    window.addEventListener('resize', function() { marcar(); pedirRelevo(); });
+    if (!NO_MOTION) {
+      pedirRelevo();
+      /* As capturas entram em lazy: quando chegam, as larguras mudam. */
+      window.addEventListener('load', pedirRelevo);
+    }
 
     /* ── Arrastar com o cursor ─────────────────────────── */
     if (isHoverDevice) {
@@ -780,7 +1081,7 @@ window.addEventListener('load', function() {
 (function() {
   if (!isHoverDevice) return;
 
-  var CAIXAS = '.case-intro .integ-step, .project-head, .project-next, .reason, .feat, .eco-item';
+  var CAIXAS = '.case-intro .integ-step, .project-head, .project-next, .camada, .feat, .eco-item';
 
   document.querySelectorAll(CAIXAS).forEach(function(caixa) {
     caixa.classList.add('spot');

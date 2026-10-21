@@ -24,6 +24,37 @@
 </head>
 <body>
 
+  <!-- ═══ CAPA DE ENTRADA ══════════════════════════════════ -->
+  <div class="capa" id="capa" role="presentation">
+    <div class="capa-fundo" aria-hidden="true"></div>
+    <div class="capa-ondas" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="capa-inner">
+      <svg class="capa-logo" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect class="capa-logo-caixa" width="28" height="28" rx="7" style="fill: var(--primary)"/>
+        <path class="capa-logo-hex" d="M14 5.5L20.5 9.25V16.75L14 20.5L7.5 16.75V9.25L14 5.5Z"
+              stroke="oklch(0.09 0.022 252)" stroke-width="1.4" stroke-linejoin="round" fill="none"
+              pathLength="100"/>
+      </svg>
+
+      <p class="capa-nome" aria-hidden="true">
+        <span>I</span><span>M</span><span>E</span><span>N</span><span>T</span>
+      </p>
+
+      <p class="capa-claim">Soluções tecnológicas</p>
+      <p class="capa-slogan">Increase your Environment</p>
+
+      <ul class="capa-frentes" role="list">
+        <li>SaaS</li>
+        <li>Mobile</li>
+        <li>Web</li>
+      </ul>
+
+      <span class="capa-barra" aria-hidden="true"><span class="capa-barra-fill"></span></span>
+    </div>
+  </div>
+
   <div id="cursor-glow" aria-hidden="true"></div>
   <div id="progress-bar" aria-hidden="true"></div>
 
@@ -48,6 +79,20 @@
       <div class="btn-magnetic-wrap nav-cta">
         <a href="#contato" class="btn btn-outline">Falar com a Iment</a>
       </div>
+      <span class="motion-dica" aria-hidden="true">animações off</span>
+      <button class="theme-toggle motion-toggle" id="motion-toggle" aria-label="Ativar ou desativar animações" title="Animações">
+        <svg class="icon-motion-on" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+          <path d="M1.6 8a6.4 6.4 0 0112.8 0"/>
+          <circle cx="12.6" cy="8" r="1.7" fill="currentColor" stroke="none"/>
+          <path d="M3 11.6h10"/>
+        </svg>
+        <svg class="icon-motion-off" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+          <path d="M1.6 8a6.4 6.4 0 0112.8 0"/>
+          <circle cx="12.6" cy="8" r="1.7"/>
+          <path d="M2.2 2.2l11.6 11.6"/>
+        </svg>
+      </button>
+
       <button class="theme-toggle" id="theme-toggle" aria-label="Alternar para tema claro">
         <svg class="icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
           <circle cx="8" cy="8" r="2.8"/>
@@ -70,7 +115,7 @@
       <a href="#projetos">Teo</a>
       <a href="#ecossistema">Soluções</a>
       <a href="#processo">Processo</a>
-      <a href="#parceria">Por que a Iment</a>
+      <a href="#arquitetura">Arquitetura</a>
       <a href="#contato">Contato</a>
       <a href="#contato" class="btn btn-fill">Falar com a Iment</a>
     </div>
@@ -87,9 +132,14 @@
 
       <div class="hero-left">
         <div class="cover-id">
+          <svg class="cover-logo" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <rect width="28" height="28" rx="7" style="fill: var(--primary)"/>
+            <path d="M14 5.5L20.5 9.25V16.75L14 20.5L7.5 16.75V9.25L14 5.5Z"
+                  stroke="oklch(0.09 0.022 252)" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
+          </svg>
           <span class="cover-name">Iment</span>
           <span class="cover-rule" aria-hidden="true"></span>
-          <span class="cover-claim">Increase your Environment</span>
+          <span class="cover-claim">Soluções tecnológicas</span>
         </div>
 
         <div class="hero-tag">
@@ -180,8 +230,36 @@
 
     <div class="manifesto-wrap wrap">
       <div class="manifesto-side">
+       <div class="manifesto-side-inner">
         <span class="label" data-scramble>Quem somos</span>
-        <div class="side-line"></div>
+
+        <!-- As três frentes que o parágrafo ao lado cita, em forma de trilho.
+             `aria-hidden` porque o texto já diz o mesmo logo adiante: para
+             quem usa leitor de tela isto seria repetição. -->
+        <div class="frentes" aria-hidden="true">
+          <span class="frentes-trilho">
+            <span class="frentes-fill"></span>
+            <span class="frentes-led"></span>
+          </span>
+          <ul class="frentes-lista" role="list">
+            <li class="frente">
+              <span class="frente-ponto"></span>
+              <span class="frente-nome">Mobile</span>
+              <span class="frente-desc">Aplicativos</span>
+            </li>
+            <li class="frente">
+              <span class="frente-ponto"></span>
+              <span class="frente-nome">Web</span>
+              <span class="frente-desc">Plataformas</span>
+            </li>
+            <li class="frente">
+              <span class="frente-ponto"></span>
+              <span class="frente-nome">SaaS</span>
+              <span class="frente-desc">Infraestrutura</span>
+            </li>
+          </ul>
+        </div>
+       </div>
       </div>
       <div>
         <p class="manifesto-statement" id="manifesto-heading">
@@ -273,14 +351,26 @@
       <p class="projetos-lede">O Integramente é o projeto nº 1 da Iment: o primeiro de uma linha de aplicativos que resolvem dificuldades reais. Cada próximo projeto entra aqui, com o mesmo nível de detalhe.</p>
 
       <header class="project-head">
+        <img class="project-icone" src="assets/integramente-icone.webp"
+             alt="Ícone do Integramente: a cabeça do pinguim Teo num quadrado azul arredondado, com o cordão de fitas coloridas."
+             width="360" height="360" loading="lazy" decoding="async" />
         <div class="project-id">
           <h3>Integramente</h3>
           <p>Aplicativo educacional para estudantes com Transtorno do Espectro Autista, com uma área web de IA para os adultos que acompanham.</p>
+          <ul class="project-fatos" role="list">
+            <li><span class="fato-k">Plataformas</span><span class="fato-v">Mobile + Web</span></li>
+            <li><span class="fato-k">Público</span><span class="fato-v">Estudantes com TEA</span></li>
+            <li><span class="fato-k">Equipe</span><span class="fato-v">6 pessoas</span></li>
+            <li><span class="fato-k">Situação</span><span class="fato-v fato-ok">Entregue</span></li>
+          </ul>
+
           <ul class="project-meta" role="list">
             <li>React Native</li>
             <li>Expo</li>
+            <li>TypeScript</li>
             <li>Spring Boot</li>
             <li>PostgreSQL</li>
+            <li>JWT</li>
           </ul>
         </div>
       </header>
@@ -567,11 +657,11 @@
     </div>
 
     <div class="wrap">
-      <article class="project-next" aria-label="Próximo projeto, ainda em definição">
+      <article class="project-next">
         <div class="project-id">
-          <h3>O próximo</h3>
-          <p>Ainda não existe. Quando existir, ocupa este lugar — mesma estrutura, mesmas partes, mesmas telas reais.</p>
-          <span class="project-next-k">Em definição</span>
+          <h3>Em breve, mais aplicativos</h3>
+          <p>O Integramente abre a linha. Os próximos nascem do mesmo método e ocupam este espaço com o mesmo nível de detalhe.</p>
+          <span class="project-next-k">Em desenvolvimento</span>
         </div>
       </article>
     </div>
@@ -656,24 +746,36 @@
 
       <ol class="steps" id="steps" role="list">
         <li class="step">
-          <span class="step-num">01</span>
-          <h3>Diagnóstico</h3>
-          <p>Entendemos o ambiente antes de escrever a primeira linha. Quem usa, o que já existe, o que precisa mudar e o que não deve ser tocado.</p>
+          <span class="step-dot" aria-hidden="true"></span>
+          <div class="step-card">
+            <span class="step-num">01</span>
+            <h3>Diagnóstico</h3>
+            <p>Entendemos o ambiente antes de escrever a primeira linha. Quem usa, o que já existe, o que precisa mudar e o que não deve ser tocado.</p>
+          </div>
         </li>
         <li class="step">
-          <span class="step-num">02</span>
-          <h3>Arquitetura</h3>
-          <p>Definimos a base que vai sustentar o crescimento: separação em camadas, contrato de API e modelo de dados pensados para durar.</p>
+          <span class="step-dot" aria-hidden="true"></span>
+          <div class="step-card">
+            <span class="step-num">02</span>
+            <h3>Arquitetura</h3>
+            <p>Definimos a base que vai sustentar o crescimento: separação em camadas, contrato de API e modelo de dados pensados para durar.</p>
+          </div>
         </li>
         <li class="step">
-          <span class="step-num">03</span>
-          <h3>Construção</h3>
-          <p>Entregas incrementais, revisadas uma a uma. Cada mudança passa por revisão de código antes de chegar à produção.</p>
+          <span class="step-dot" aria-hidden="true"></span>
+          <div class="step-card">
+            <span class="step-num">03</span>
+            <h3>Construção</h3>
+            <p>Entregas incrementais, revisadas uma a uma. Cada mudança passa por revisão de código antes de chegar à produção.</p>
+          </div>
         </li>
         <li class="step">
-          <span class="step-num">04</span>
-          <h3>Operação</h3>
-          <p>Infraestrutura, segurança, atualizações e suporte. O software continua vivo depois da entrega — é aí que o modelo SaaS prova seu valor.</p>
+          <span class="step-dot" aria-hidden="true"></span>
+          <div class="step-card">
+            <span class="step-num">04</span>
+            <h3>Operação</h3>
+            <p>Infraestrutura, segurança, atualizações e suporte. O software continua vivo depois da entrega — é aí que o modelo SaaS prova seu valor.</p>
+          </div>
         </li>
       </ol>
     </div>
@@ -681,34 +783,53 @@
 
 
   <!-- ═══ PARCERIA ═════════════════════════════════════════ -->
-  <section id="parceria" aria-labelledby="parceria-heading">
+  <section id="arquitetura" aria-labelledby="arq-heading">
     <div class="sec-mark">
-      <span class="sec-mark-t">Parceria</span>
+      <span class="sec-mark-t">Arquitetura</span>
       <span class="sec-mark-rule" aria-hidden="true"></span>
     </div>
 
-    <div class="parceria-inner">
-      <div class="parceria-head">
-        <h2 id="parceria-heading">Por que escolher a Iment como parceira de inovação</h2>
-        <p>Não vendemos código. Construímos ecossistemas com visão de longo prazo.</p>
+    <div class="wrap">
+      <div class="eco-section-head">
+        <h2 id="arq-heading">Como o sistema é montado</h2>
+        <span data-scramble>TRÊS CAMADAS // UM CONTRATO</span>
       </div>
-      <div class="reasons-grid">
-        <div class="reason">
-          <span class="reason-num" data-target="1">01</span>
-          <h3>Identidade Própria</h3>
-          <p>Cada site e aplicativo reflete a essência do projeto. Nenhuma solução genérica sai daqui.</p>
-        </div>
-        <div class="reason">
-          <span class="reason-num" data-target="2">02</span>
-          <h3>Infraestrutura Escalável</h3>
-          <p>Tecnologias de ponta com segurança nativa, preparadas para crescer junto com a demanda.</p>
-        </div>
-        <div class="reason">
-          <span class="reason-num" data-target="3">03</span>
-          <h3>Parceiro Estratégico</h3>
-          <p>Não um fornecedor de código. Um parceiro com visão de futuro focado no crescimento real do seu negócio.</p>
-        </div>
-      </div>
+
+      <p class="arq-lede">O app da criança e a área do adulto são dois clientes do mesmo servidor. Nenhum deles fala com o banco: tudo passa pela API, que é onde as regras moram.</p>
+
+      <ol class="arq-camadas" role="list">
+        <li class="camada">
+          <span class="camada-k">Clientes</span>
+          <h3>Quem usa</h3>
+          <ul class="camada-itens" role="list">
+            <li><strong>App da criança</strong><span>React Native · Expo · TypeScript</span></li>
+            <li><strong>Área do adulto</strong><span>Web · acesso por PIN · sessão de 8h</span></li>
+          </ul>
+        </li>
+
+        <li class="camada">
+          <span class="camada-k">Aplicação</span>
+          <h3>Onde ficam as regras</h3>
+          <ul class="camada-itens" role="list">
+            <li><strong>API REST</strong><span>Spring Boot · autenticação JWT</span></li>
+            <li><strong>Ferramentas da IA</strong><span>validadas, em nome do adulto</span></li>
+          </ul>
+        </li>
+
+        <li class="camada">
+          <span class="camada-k">Dados</span>
+          <h3>Onde fica o estado</h3>
+          <ul class="camada-itens" role="list">
+            <li><strong>PostgreSQL</strong><span>progresso, atividades, contas</span></li>
+            <li><strong>Base de conhecimento</strong><span>documentos revisados, com fonte</span></li>
+          </ul>
+        </li>
+      </ol>
+
+      <p class="arq-nota">
+        <span class="arq-nota-k">Por que importa</span>
+        A IA não escreve no banco. Ela chama as mesmas ferramentas que a API expõe, com as mesmas permissões do adulto que está logado — então nada que ela crie escapa das regras do sistema.
+      </p>
     </div>
   </section>
 
