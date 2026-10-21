@@ -29,28 +29,14 @@ if (typeof gsap === 'undefined') {
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* A preferência do sistema é o padrão; a escolha feita no site vence sobre
-   ela e fica guardada. Ler isto antes de tudo importa: `NO_MOTION` decide
-   o que chega a ser criado mais abaixo. */
-var MOTION_KEY = 'iment-motion';
-var _escolha = null;
-try { _escolha = localStorage.getItem(MOTION_KEY); } catch (e) { _escolha = null; }
+/* A preferência do sistema continua sendo lida, mas agora só governa o que
+   é de fato invasivo — a capa que toma a tela inteira. O resto da página
+   anima para todo mundo: o site existe para chamar atenção, e um visitante
+   com animação desligada no sistema estava vendo uma página morta sem
+   nenhuma pista de que havia mais ali. */
+var PREF_REDUZIDO = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var NO_MOTION = false;
 
-var NO_MOTION = _escolha ? _escolha === 'off'
-                         : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-document.documentElement.setAttribute('data-motion', NO_MOTION ? 'off' : 'on');
-
-(function() {
-  var botao = document.getElementById('motion-toggle');
-  if (!botao) return;
-  botao.addEventListener('click', function() {
-    try { localStorage.setItem(MOTION_KEY, NO_MOTION ? 'on' : 'off'); } catch (e) {}
-    /* Recarrega em vez de ligar na hora: metade das animações só existe se
-       `NO_MOTION` for falso no carregamento, e montá-las com a página já
-       rolada deixaria elementos presos no estado inicial. */
-    location.reload();
-  });
-})();
 var isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 /* ── Theme toggle ─────────────────────────────────────────── */
@@ -252,8 +238,16 @@ if (!NO_MOTION) {
     var marcas = alturas();
     window.addEventListener('resize', function() { marcas = alturas(); });
 
-    /* Começa já acesa na primeira marca e nunca volta ao zero: um instante
-       com o trilho inteiro apagado parece defeito, não pausa. */
+    /* No celular o trilho é horizontal e curto: o ponto de luz andando entre
+       três marcas quase coladas lê como falha de render, não como animação.
+       Lá as três ficam acesas e o trilho cheio. */
+    if (window.innerWidth < 961) {
+      gsap.set(fill, { scaleY: 1 });
+      gsap.set(led, { opacity: 0 });
+      frentes.forEach(function(f) { f.classList.add('on'); });
+      return;
+    }
+
     var passo = { p: marcas[0] };
     gsap.to(passo, {
       p: 1,
@@ -511,11 +505,11 @@ if (!NO_MOTION) {
      GSAP resolve os dois sem que um apague o outro. Durações diferentes
      evitam o vaivém mecânico de ida e volta sincronizadas. */
   gsap.to('.project-icone', {
-    yPercent: -7, duration: 3.4,
+    yPercent: -12, duration: 3.2,
     repeat: -1, yoyo: true, ease: 'sine.inOut',
   });
   gsap.to('.project-icone', {
-    rotate: 2.5, duration: 5.1,
+    rotate: 4, duration: 4.7,
     repeat: -1, yoyo: true, ease: 'sine.inOut',
   });
 
@@ -617,7 +611,14 @@ if (!NO_MOTION) {
 
   /* Com movimento reduzido a capa não entra em cena: uma tela cheia parada
      entre a pessoa e o site seria um obstáculo, não uma abertura. */
-  if (NO_MOTION || !window.gsap) { sair(); return; }
+  /* A entrada do hero nasce pausada esperando a capa. Sem a capa, alguém
+     precisa soltá-la — senão os elementos ficam presos no estado inicial,
+     que é invisível. */
+  if (PREF_REDUZIDO || !window.gsap) {
+    sair();
+    if (window.heroTl) heroTl.play();
+    return;
+  }
 
   /* Trava a rolagem enquanto a capa está na frente, senão dá para rolar o
      site por baixo dela e chegar ao meio da página já rolado. */
@@ -660,23 +661,6 @@ if (!NO_MOTION) {
     .to('.capa-inner', { scale: 1.12, opacity: 0, duration: 0.55, ease: 'power2.in' }, '+=0.1')
     .to(capa, { clipPath: 'circle(0% at 50% 50%)', duration: 0.95, ease: 'power3.inOut' }, '-=0.35');
 })();
-
-
-/* ══════════════════════════════════════════════════════════ */
-/* Processo com movimento reduzido                            */
-/* ══════════════════════════════════════════════════════════ */
-/* O trilho e os pontos são acesos pelo scroll. Sem animação esse gatilho
-   não roda, e a seção ficava com tudo apagado, como se o processo não
-   tivesse acontecido. Aqui o estado final é aplicado de uma vez. */
-if (NO_MOTION) {
-  var fillFrentes = document.querySelector('.frentes-fill');
-  if (fillFrentes) fillFrentes.style.transform = 'scaleY(1)';
-  document.querySelectorAll('.frente').forEach(function(f) { f.classList.add('on'); });
-
-  var trilhoFeito = document.getElementById('steps-rail-fill');
-  if (trilhoFeito) trilhoFeito.style.transform = 'scaleX(1)';
-  document.querySelectorAll('.step').forEach(function(s) { s.classList.add('on'); });
-}
 
 
 /* ══════════════════════════════════════════════════════════ */

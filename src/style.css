@@ -1120,12 +1120,6 @@ section[id] + section[id] { border-top: 1px solid var(--border); }
   height: 1px;
   background: linear-gradient(90deg, var(--border-2), transparent);
 }
-.cover-claim {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  color: var(--text-3);
-}
 
 /* ── Galeria horizontal de telas ──────────────────────── */
 /* Fica fora da `.wrap` para ocupar a largura toda, e o track recebe de volta
@@ -1975,8 +1969,7 @@ html.theme-transitioning *::after {
   .project-head { grid-template-columns: 1fr; gap: 1rem; margin-top: 2.5rem; }
     .project-part { margin-top: 3.5rem; gap: 0.9rem; flex-direction: column; }
   .cover-id { margin-bottom: 1.5rem; }
-  .cover-claim { display: none; }
-}
+  }
 
 @media (max-width: 960px) {
   .sec-mark { margin-bottom: 2.75rem; gap: 0.7rem; font-size: 0.62rem; }
@@ -1997,16 +1990,6 @@ html.theme-transitioning *::after {
 @media (max-width: 560px) {
   .steps { grid-template-columns: 1fr; }
 }
-
-/* ── Botão de animações ───────────────────────────────── */
-/* O site respeita `prefers-reduced-motion` por padrão, mas quem tem a
-   opção desligada no sistema e quer ver o movimento aqui precisa de uma
-   saída que não passe por configuração do sistema operacional. */
-.motion-toggle { margin-right: 0.5rem; }
-.icon-motion-off { display: none; }
-[data-motion="off"] .icon-motion-on  { display: none; }
-[data-motion="off"] .icon-motion-off { display: block; }
-.motion-toggle:hover { color: var(--primary); border-color: var(--primary); }
 
 /* ── Capa de entrada ──────────────────────────────────── */
 /* Cobre a página inteira no carregamento e sai revelando o site. Fica
@@ -2114,31 +2097,9 @@ html.theme-transitioning *::after {
   transform-origin: left center;
 }
 
-/* Sem animação a capa nem chega a aparecer: uma tela cheia parada no meio
-   do caminho seria um obstáculo, não uma abertura. */
-[data-motion="off"] .capa { display: none; }
-
-/* ── Aviso de animações desligadas ────────────────────── */
-/* Sem isto, quem tem movimento reduzido no sistema vê o site parado e não
-   tem como saber que existe um botão para ligar. */
-.motion-dica {
-  display: none;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  white-space: nowrap;
-}
-[data-motion="off"] .motion-dica { display: flex; }
-.motion-dica::after {
-  content: '';
-  width: 1.5rem;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border-2));
-}
+/* Com movimento reduzido no sistema a capa nem chega a aparecer: uma tela
+   cheia parada no meio do caminho seria obstáculo, não abertura. */
+@media (prefers-reduced-motion: reduce) { .capa { display: none; } }
 
 .cover-logo {
   width: 30px;
@@ -2148,8 +2109,7 @@ html.theme-transitioning *::after {
 .cover-name { font-size: 1.25rem; }
 
 @media (max-width: 768px) {
-  .motion-dica { display: none !important; }
-  .capa-frentes { gap: 1.1rem; }
+    .capa-frentes { gap: 1.1rem; }
 }
 
 @media (max-width: 960px) {
@@ -2310,7 +2270,6 @@ html.theme-transitioning *::after {
   .frente-ponto { left: 0; top: -1.4rem; }
 }
 
-
 /* ── Caixas do orbital: respiração ────────────────────── */
 /* Em CSS e não no GSAP: o anel é um pseudo-elemento, que o GSAP não
    alcança, e a sombra usa `color-mix`, que ele não sabe interpolar dentro
@@ -2340,8 +2299,6 @@ html.theme-transitioning *::after {
 @media (prefers-reduced-motion: reduce) {
   .eco-node, .eco-node::after { animation: none; }
 }
-[data-motion="off"] .eco-node,
-[data-motion="off"] .eco-node::after { animation: none; }
 
 /* ── Modo claro: as animações precisam de mais corpo ──── */
 /* Um brilho de 35% de alfa some sobre branco. No claro cada pulso usa cor
