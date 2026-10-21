@@ -2262,6 +2262,11 @@ html.theme-transitioning *::after {
 .project-icone { will-change: transform; }
 
 @media (max-width: 960px) {
+  /* Deitado, o LED parte da ponta esquerda e fica centrado na linha. */
+  .frentes-led { left: 0; top: 50%; margin-left: -3px; margin-top: -3px; }
+}
+
+@media (max-width: 960px) {
   .manifesto-side-inner { position: static; gap: 1.75rem; }
   .frentes-lista { grid-auto-flow: column; gap: 1.5rem; }
   .frentes { padding-left: 0; padding-top: 1.4rem; }

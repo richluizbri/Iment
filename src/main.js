@@ -218,9 +218,9 @@ if (!NO_MOTION) {
       scrollTrigger: { trigger: '#manifesto', start: 'top 72%' },
     });
   }
-  /* As três frentes acendem como um LED que desce e volta, em laço próprio.
-     Antes isso dependia do scroll: quem parasse de rolar via a animação
-     parar junto, e quem já tivesse passado nunca mais via nada. */
+  /* As três frentes acendem como um LED que percorre o trilho e volta, em
+     laço próprio. Antes dependia do scroll: quem parasse de rolar via a
+     animação parar junto, e quem já tivesse passado nunca mais via nada. */
   (function() {
     var frentes = document.querySelectorAll('.frente');
     var trilho  = document.querySelector('.frentes-trilho');
@@ -228,26 +228,47 @@ if (!NO_MOTION) {
     var led     = document.querySelector('.frentes-led');
     if (!frentes.length || !trilho || !fill || !led) return;
 
-    function alturas() {
-      var base = trilho.getBoundingClientRect().top;
+    /* O trilho é vertical no desktop e horizontal no celular. A orientação
+       vem da geometria do próprio elemento, não de uma largura de janela
+       escrita aqui: assim ela acompanha a media query em vez de duplicar a
+       regra, e sobrevive a qualquer redimensionamento. */
+    function deitado() { return trilho.offsetWidth > trilho.offsetHeight; }
+    function curso()   { return deitado() ? trilho.offsetWidth : trilho.offsetHeight; }
+
+    function medirMarcas() {
+      var h = deitado();
+      var base = trilho.getBoundingClientRect();
+      var total = curso() || 1;
       return Array.prototype.map.call(frentes, function(f) {
         var p = f.querySelector('.frente-ponto').getBoundingClientRect();
-        return (p.top + p.height / 2 - base) / trilho.offsetHeight;
+        var centro = h ? (p.left + p.width / 2 - base.left)
+                       : (p.top + p.height / 2 - base.top);
+        return centro / total;
       });
     }
-    var marcas = alturas();
-    window.addEventListener('resize', function() { marcas = alturas(); });
 
-    /* No celular o trilho é horizontal e curto: o ponto de luz andando entre
-       três marcas quase coladas lê como falha de render, não como animação.
-       Lá as três ficam acesas e o trilho cheio. */
-    if (window.innerWidth < 961) {
-      gsap.set(fill, { scaleY: 1 });
-      gsap.set(led, { opacity: 0 });
-      frentes.forEach(function(f) { f.classList.add('on'); });
-      return;
+    var marcas = medirMarcas();
+    var remedir;
+    window.addEventListener('resize', function() {
+      clearTimeout(remedir);
+      remedir = setTimeout(function() { marcas = medirMarcas(); }, 150);
+    });
+
+    function desenhar(p) {
+      if (deitado()) {
+        gsap.set(fill, { scaleX: p, scaleY: 1 });
+        gsap.set(led,  { x: p * curso(), y: 0 });
+      } else {
+        gsap.set(fill, { scaleY: p, scaleX: 1 });
+        gsap.set(led,  { y: p * curso(), x: 0 });
+      }
+      frentes.forEach(function(f, i) {
+        f.classList.toggle('on', p >= marcas[i] - 0.015);
+      });
     }
 
+    /* Começa já na primeira marca e nunca volta ao zero: um instante com o
+       trilho inteiro apagado parece defeito, não pausa. */
     var passo = { p: marcas[0] };
     gsap.to(passo, {
       p: 1,
@@ -256,13 +277,7 @@ if (!NO_MOTION) {
       repeat: -1,
       yoyo: true,
       repeatDelay: 0.25,
-      onUpdate: function() {
-        gsap.set(fill, { scaleY: passo.p });
-        gsap.set(led, { y: passo.p * trilho.offsetHeight, opacity: passo.p > 0.01 ? 1 : 0 });
-        frentes.forEach(function(f, i) {
-          f.classList.toggle('on', passo.p >= marcas[i] - 0.015);
-        });
-      },
+      onUpdate: function() { desenhar(passo.p); },
     });
 
     gsap.from('.frente', {
