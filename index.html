@@ -4,6 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Iment — Increase your Environment</title>
+  <meta name="description" content="A Iment desenvolve ecossistemas digitais completos: aplicativos móveis, plataformas web e infraestrutura SaaS. Conheça o Integramente, nosso app de inovação social." />
+  <meta name="theme-color" content="#0a0e14" />
+  <link rel="canonical" href="https://iment-navy.vercel.app/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Iment" />
+  <meta property="og:title" content="Iment — Increase your Environment" />
+  <meta property="og:description" content="Ecossistemas digitais completos: mobile, web e infraestrutura SaaS. Conheça o Integramente." />
+  <meta property="og:url" content="https://iment-navy.vercel.app/" />
+  <meta name="twitter:card" content="summary" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='7' fill='%232b7fff'/%3E%3Cpath d='M14 5.5L20.5 9.25V16.75L14 20.5L7.5 16.75V9.25L14 5.5Z' stroke='%230a0e14' stroke-width='1.6' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -27,8 +40,9 @@
       </a>
       <ul class="nav-links" role="list">
         <li><a href="#manifesto">Quem Somos</a></li>
-        <li><a href="#ecossistema">Ecossistema</a></li>
-        <li><a href="#integramente">Integramente</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#ecossistema">Soluções</a></li>
+        <li><a href="#processo">Processo</a></li>
         <li><a href="#contato">Contato</a></li>
       </ul>
       <div class="btn-magnetic-wrap nav-cta">
@@ -52,8 +66,10 @@
     </div>
     <div class="nav-mobile" id="mobile-nav">
       <a href="#manifesto">Quem Somos</a>
-      <a href="#ecossistema">Ecossistema</a>
-      <a href="#integramente">Integramente</a>
+      <a href="#projetos">Projeto</a>
+      <a href="#projetos">Teo</a>
+      <a href="#ecossistema">Soluções</a>
+      <a href="#processo">Processo</a>
       <a href="#parceria">Por que a Iment</a>
       <a href="#contato">Contato</a>
       <a href="#contato" class="btn btn-fill">Falar com a Iment</a>
@@ -63,9 +79,19 @@
 
   <!-- ═══ HERO ══════════════════════════════════════════════ -->
   <section id="hero" aria-labelledby="hero-heading">
+    <div class="hero-aurora" aria-hidden="true">
+      <span class="aurora-blob aurora-1"></span>
+      <span class="aurora-blob aurora-2"></span>
+    </div>
     <div class="hero-grid">
 
       <div class="hero-left">
+        <div class="cover-id">
+          <span class="cover-name">Iment</span>
+          <span class="cover-rule" aria-hidden="true"></span>
+          <span class="cover-claim">Increase your Environment</span>
+        </div>
+
         <div class="hero-tag">
           <span class="tag-dot"></span>
           SaaS &nbsp;/&nbsp; Mobile &nbsp;/&nbsp; Web
@@ -79,10 +105,10 @@
 
         <div class="hero-actions">
           <div class="btn-magnetic-wrap">
-            <a href="#ecossistema" class="btn btn-fill btn-lg">Explorar Soluções</a>
+            <a href="#projetos" class="btn btn-fill btn-lg">Ver o Integramente</a>
           </div>
           <div class="btn-magnetic-wrap">
-            <a href="#integramente" class="btn btn-outline btn-lg">Ver Integramente</a>
+            <a href="#ecossistema" class="btn btn-outline btn-lg">Explorar Soluções</a>
           </div>
         </div>
       </div>
@@ -129,139 +155,542 @@
 
       </div>
     </div>
+
+    <!-- ── Equipe ─────────────────────────────────────────── -->
+    <div class="hero-team">
+      <span class="hero-team-k">Equipe</span>
+      <ul class="hero-team-list" role="list">
+        <li>Gabriel dos Anjos</li>
+        <li>Eduardo Franco</li>
+        <li>Luiza Marinho</li>
+        <li>Lucas Volpe</li>
+        <li>Edson Fernando</li>
+        <li>Luiz Felipe</li>
+      </ul>
+    </div>
   </section>
 
 
   <!-- ═══ MANIFESTO ════════════════════════════════════════ -->
   <section id="manifesto" aria-labelledby="manifesto-heading">
+    <div class="sec-mark">
+      <span class="sec-mark-t">Quem somos</span>
+      <span class="sec-mark-rule" aria-hidden="true"></span>
+    </div>
+
     <div class="manifesto-wrap wrap">
       <div class="manifesto-side">
-        <span class="label">Quem somos</span>
+        <span class="label" data-scramble>Quem somos</span>
         <div class="side-line"></div>
       </div>
       <div>
         <p class="manifesto-statement" id="manifesto-heading">
-          Na Iment, somos um <em>laboratório de inovação viva.</em> Não um produto, não um serviço, mas um ecossistema completo que expande o ambiente em que negócios crescem e vidas mudam.
+          A Iment é uma <em>empresa de soluções tecnológicas</em> que parte de dificuldades reais. Olhamos primeiro para o problema de quem vai usar o sistema — a tecnologia vem depois, como consequência.
         </p>
         <p class="manifesto-sub">
-          "Increase your Environment" não é apenas um slogan. É o compromisso com cada linha de código que escrevemos, cada interface que desenhamos e cada solução que construímos para o mercado e para a sociedade.
+          Na prática, isso significa três frentes: aplicativos móveis, plataformas web e infraestrutura SaaS. Cada projeto começa por entender o ambiente onde vai viver e termina em um sistema que continua funcionando depois da entrega. É o que "Increase your Environment" quer dizer.
         </p>
+
+        <div class="objectives">
+          <span class="objectives-label" data-scramble>Nossos objetivos</span>
+          <ol class="objectives-list" role="list">
+            <li class="objective">
+              <span class="objective-num">01</span>
+              <div>
+                <h3>Partir do problema</h3>
+                <p>Entender a dificuldade antes de escolher a ferramenta. Software que nasce da tecnologia resolve o que é fácil; software que nasce do problema resolve o que importa.</p>
+              </div>
+            </li>
+            <li class="objective">
+              <span class="objective-num">02</span>
+              <div>
+                <h3>Construir para durar</h3>
+                <p>Arquitetura em camadas, contrato de API definido e base preparada para crescer. Entregar funcionando é o mínimo; continuar funcionando é o objetivo.</p>
+              </div>
+            </li>
+            <li class="objective">
+              <span class="objective-num">03</span>
+              <div>
+                <h3>Provar que tecnologia gera acesso</h3>
+                <p>Nem toda dificuldade é de negócio. O Integramente existe para demonstrar que a mesma engenharia que escala um produto pode abrir uma porta que estava fechada.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
   </section>
+
+
+  <!-- ═══ FAIXA DE TECNOLOGIAS ═════════════════════════════ -->
+  <!-- Decorativa: os mesmos nomes aparecem, legíveis, em "Nossas soluções". -->
+  <div class="techbar" aria-hidden="true">
+    <div class="techbar-track" id="techbar-track">
+      <div class="techbar-set">
+        <span>React Native</span><i></i>
+        <span>Expo</span><i></i>
+        <span>TypeScript</span><i></i>
+        <span>Java</span><i></i>
+        <span>Spring Boot</span><i></i>
+        <span>PostgreSQL</span><i></i>
+        <span>JWT</span><i></i>
+        <span>REST</span><i></i>
+        <span>GSAP</span><i></i>
+        <span>SaaS</span><i></i>
+      </div>
+      <div class="techbar-set">
+        <span>React Native</span><i></i>
+        <span>Expo</span><i></i>
+        <span>TypeScript</span><i></i>
+        <span>Java</span><i></i>
+        <span>Spring Boot</span><i></i>
+        <span>PostgreSQL</span><i></i>
+        <span>JWT</span><i></i>
+        <span>REST</span><i></i>
+        <span>GSAP</span><i></i>
+        <span>SaaS</span><i></i>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ PROJETOS ════════════════════════════════════════ -->
+  <!-- Uma seção só, montada por projeto: quando entrar o segundo, basta
+       repetir o bloco `.project` com o próximo número. -->
+  <section id="projetos" aria-labelledby="projetos-heading">
+    <div class="sec-mark">
+      <span class="sec-mark-t">Projetos</span>
+      <span class="sec-mark-rule" aria-hidden="true"></span>
+    </div>
+
+    <div class="wrap">
+
+      <div class="eco-section-head">
+        <h2 id="projetos-heading">O primeiro de muitos</h2>
+        <span data-scramble>PORTFÓLIO // 01 ENTREGUE</span>
+      </div>
+
+      <p class="projetos-lede">O Integramente é o projeto nº 1 da Iment: o primeiro de uma linha de aplicativos que resolvem dificuldades reais. Cada próximo projeto entra aqui, com o mesmo nível de detalhe.</p>
+
+      <header class="project-head">
+        <div class="project-id">
+          <h3>Integramente</h3>
+          <p>Aplicativo educacional para estudantes com Transtorno do Espectro Autista, com uma área web de IA para os adultos que acompanham.</p>
+          <ul class="project-meta" role="list">
+            <li>React Native</li>
+            <li>Expo</li>
+            <li>Spring Boot</li>
+            <li>PostgreSQL</li>
+          </ul>
+        </div>
+      </header>
+
+      <div class="project-part">
+        <span class="part-k">O app</span>
+        <h4>Feito para a criança</h4>
+      </div>
+
+      <div class="case-intro">
+        <p class="integ-step"><span class="integ-step-k">A dificuldade</span>
+          Material escolar costuma ser desenhado para quem aprende da forma esperada. Instrução longa, muitos estímulos na mesma tela, nenhuma pista do que vem depois. Para um estudante com Transtorno do Espectro Autista, isso não é um detalhe de interface — é a barreira.</p>
+
+        <p class="integ-step"><span class="integ-step-k">O que construímos</span>
+          Um aplicativo educacional que organiza o conteúdo em matérias, tópicos e questões, apresenta uma tarefa por vez e mantém a navegação sempre no mesmo lugar. Com opções para o estudante ajustar a apresentação ao que funciona para ele.</p>
+
+        <p class="integ-step"><span class="integ-step-k">Contexto</span>
+          Desenvolvido no Curso Técnico de Informática do Instituto Educacional Raphael Di Santo, com orientação do professor Michael do Amaral Yansen.</p>
+      </div>
+
+    </div>
+
+    <!-- ── Galeria: telas do app ──────────────────────── -->
+    <div class="rail" data-rail>
+      <div class="rail-track">
+
+        <div class="rail-lead">
+          <span class="rail-k">04 telas</span>
+          <h3>Da abertura à atividade</h3>
+          <p>O percurso que a criança faz toda vez que abre o app — sempre na mesma ordem, sempre com as mesmas pistas do que vem depois.</p>
+          <span class="rail-hint" aria-hidden="true">role para percorrer</span>
+        </div>
+
+        <article class="rail-card">
+          <div class="rail-frame rail-frame-phone">
+            <span class="rail-notch" aria-hidden="true"></span>
+            <img src="assets/app/app-abertura.webp"
+                 alt="Tela de abertura do Integramente com o mascote e a frase Aprender do seu jeito."
+                 width="540" height="1200" loading="lazy" decoding="async" />
+          </div>
+          <div class="rail-cap">
+            <span class="rail-n">01</span>
+            <h4>Abertura</h4>
+            <p>O mascote recebe o aluno antes de qualquer conteúdo. A mesma tela, na mesma ordem, toda vez que o app abre.</p>
+          </div>
+        </article>
+
+        <article class="rail-card">
+          <div class="rail-frame rail-frame-phone">
+            <span class="rail-notch" aria-hidden="true"></span>
+            <img src="assets/app/app-boasvindas.webp"
+                 alt="Tela de boas-vindas com os botões Começar agora e Já tenho conta."
+                 width="540" height="1200" loading="lazy" decoding="async" />
+          </div>
+          <div class="rail-cap">
+            <span class="rail-n">02</span>
+            <h4>Entrada na conta</h4>
+            <p>Duas escolhas, nada além disso. O percurso começa aqui e o progresso fica guardado no servidor.</p>
+          </div>
+        </article>
+
+        <article class="rail-card">
+          <div class="rail-frame rail-frame-phone">
+            <span class="rail-notch" aria-hidden="true"></span>
+            <img src="assets/app/app-home.webp"
+                 alt="Tela inicial com saudação ao aluno, a matéria em andamento e o botão Continuar."
+                 width="540" height="1200" loading="lazy" decoding="async" />
+          </div>
+          <div class="rail-cap">
+            <span class="rail-n">03</span>
+            <h4>Onde você parou</h4>
+            <p>A tela inicial mostra a matéria em andamento e o tópico exato onde o aluno parou. Retomar é um toque, não uma busca.</p>
+          </div>
+        </article>
+
+        <article class="rail-card">
+          <div class="rail-frame rail-frame-phone">
+            <span class="rail-notch" aria-hidden="true"></span>
+            <img src="assets/app/app-mapa.webp"
+                 alt="Atividade Monte o mapa: arrastar as regiões do Brasil para o lugar certo."
+                 width="540" height="1200" loading="lazy" decoding="async" />
+          </div>
+          <div class="rail-cap">
+            <span class="rail-n">04</span>
+            <h4>Atividade interativa</h4>
+            <p>Uma das quatro modalidades: pontos, formas no mapa, letras e grupos. O aluno manipula os elementos em vez de só escolher uma alternativa.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="wrap">
+
+
+      <!-- ── O que o app faz ────────────────────────────── -->
+      <div class="integ-features">
+        <article class="feat">
+          <h4>Conteúdo em unidades curtas</h4>
+          <p>Matérias, tópicos e questões. Uma tarefa por vez, com o caminho sempre visível.</p>
+        </article>
+        <article class="feat">
+          <h4>Quatro tipos de atividade</h4>
+          <p>Pontos, formas no mapa, letras e grupos — todas por arrastar e soltar.</p>
+        </article>
+        <article class="feat">
+          <h4>Ajustes que ficam salvos</h4>
+          <p>Tema claro ou escuro e três tamanhos de fonte. A escolha persiste ao reabrir o app.</p>
+        </article>
+        <article class="feat">
+          <h4>Dicas em voz alta</h4>
+          <p>Síntese de voz lê as orientações, oferecendo uma alternativa ao texto.</p>
+        </article>
+      </div>
+
+      <!-- ── O mascote ──────────────────────────────────── -->
+      <div class="theo-block">
+        <div class="theo-figure">
+          <div class="theo-glow" aria-hidden="true"></div>
+          <img src="assets/theo.gif" alt="Teo, o mascote do Integramente: um pinguim azul sorrindo, de braços abertos, usando um cordão com fitas coloridas."
+               class="theo-img" width="330" height="324" loading="lazy" decoding="async" />
+        </div>
+        <div class="theo-text">
+          <span class="integ-label" data-scramble>O mascote</span>
+          <h3>Este é o Teo.</h3>
+          <p>Ele acompanha a criança em todas as telas do Integramente: apresenta a atividade, dá a instrução em linguagem direta e comemora quando ela acerta.</p>
+          <ul class="theo-points" role="list">
+            <li><strong>Um rosto constante.</strong> A criança sabe quem vai falar com ela antes mesmo de a atividade começar. Previsibilidade reduz ansiedade.</li>
+            <li><strong>Movimento calmo.</strong> As animações dele são lentas e repetíveis de propósito. Nada pisca, nada aparece de surpresa.</li>
+            <li><strong>O cordão não é enfeite.</strong> As fitas coloridas que ele usa são o símbolo internacional da conscientização sobre o autismo.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="wrap">
+
+      <div class="project-part">
+        <span class="part-k">O assistente</span>
+        <h4>O Teo também virou assistente</h4>
+      </div>
+
+      <div class="case-intro">
+        <p class="integ-step"><span class="integ-step-k">Para quem</span>
+          O app é da criança. O Teo é dos adultos que acompanham: pais, responsáveis e profissionais. É uma aplicação web, aberta a partir do app depois que o adulto digita um PIN — assim as duas experiências não se misturam.</p>
+
+        <p class="integ-step"><span class="integ-step-k">O que ele faz</span>
+          Responde dúvidas sobre autismo com base em uma base de conhecimento curada, citando as fontes. E cria atividades para o app da criança, de forma guiada ou pelo chat.</p>
+
+        <p class="integ-step"><span class="integ-step-k">O limite, dito com todas as letras</span>
+          O Teo não dá diagnóstico, não indica remédio e não substitui terapia. Quando a pergunta sai do que ele sabe, ele diz que não sabe e orienta procurar um profissional. Toda atividade que a IA cria nasce como rascunho: nada chega à criança sem um adulto aprovar.</p>
+      </div>
+
+    </div>
+
+    <!-- ── Galeria: telas do Teo ──────────────────────── -->
+    <div class="rail" data-rail>
+      <div class="rail-track">
+
+        <div class="rail-lead">
+          <span class="rail-k">07 telas</span>
+          <h3>A área do adulto</h3>
+          <p>Da pergunta à atividade aprovada. Tudo o que a IA produz passa por uma pessoa antes de chegar à criança.</p>
+          <span class="rail-hint" aria-hidden="true">role para percorrer</span>
+        </div>
+
+        <article class="rail-card">
+          <div class="rail-frame rail-frame-web">
+            <img src="assets/app/teo-inicio.webp"
+                 alt="Tela inicial do Teo com o mascote e sugestões de perguntas."
+                 width="600" height="1006" loading="lazy" decoding="async" />
+          </div>
+          <div class="rail-cap">
+            <span class="rail-n">01</span>
+            <h4>Início</h4>
+            <p>Atalhos para o que mais se pergunta: direitos da pessoa autista, rotina em casa, tirar uma dúvida ou criar uma atividade.</p>
+          </div>
+        </article>
+
+        <article class="rail-card">
+          <div class="rail-frame rail-frame-web">
+            <img src="assets/app/teo-menu.webp"
+                 alt="Menu lateral do Teo com busca de conversas, histórico do dia, Criar atividade e Minhas atividades."
+                 width="600" height="1006" loading="lazy" decoding="async" />
+          </div>
+          <div class="rail-cap">
+            <span class="rail-n">02</span>
+            <h4>Menu e histórico</h4>
+            <p>As conversas ficam salvas e agrupadas por data, com busca. No rodapé, o adulto logado e o aviso de que o acesso é protegido por PIN.</p>
+          </div>
+        </article>
+
+        <article class="rail-card">
+          <div class="rail-frame rail-frame-web">
+            <img src="assets/app/teo-conversa.webp"
+                 alt="Conversa com o Teo, respondendo que não tem a informação e orientando procurar um profissional."
+                 width="600" height="1006" loading="lazy" decoding="async" />
+          </div>
+          <div class="rail-cap">
+            <span class="rail-n">03</span>
+            <h4>Conversa</h4>
+            <p>Responde em frases curtas e cita as fontes. Quando a pergunta sai do que ele sabe, ele diz que não sabe — como nesta tela.</p>
+          </div>
+        </article>
+
+        <article class="rail-card">
+          <div class="rail-frame rail-frame-web">
+            <img src="assets/app/teo-criar.webp"
+                 alt="Tela de criação de atividade, com a escolha do tipo Complete a palavra."
+                 width="600" height="1006" loading="lazy" decoding="async" />
+          </div>
+          <div class="rail-cap">
+            <span class="rail-n">04</span>
+            <h4>Criar atividade</h4>
+            <p>A IA varia o conteúdo, mas não inventa tipos de jogo. Só monta os formatos que o app já sabe exibir, então tudo o que ela cria funciona.</p>
+          </div>
+        </article>
+
+        <article class="rail-card">
+          <div class="rail-frame rail-frame-web">
+            <img src="assets/app/teo-personalizar.webp"
+                 alt="Formulário para personalizar a atividade por tema, quantidade de palavras e letras escondidas."
+                 width="600" height="1006" loading="lazy" decoding="async" />
+          </div>
+          <div class="rail-cap">
+            <span class="rail-n">05</span>
+            <h4>Personalizar</h4>
+            <p>Por tema ou com as palavras do próprio adulto. Ele escolhe quantas palavras e quantas letras ficam escondidas em cada uma.</p>
+          </div>
+        </article>
+
+        <article class="rail-card">
+          <div class="rail-frame rail-frame-web">
+            <img src="assets/app/teo-atividades.webp"
+                 alt="Lista Minhas atividades, separada entre esperando aprovação e no app."
+                 width="600" height="1006" loading="lazy" decoding="async" />
+          </div>
+          <div class="rail-cap">
+            <span class="rail-n">06</span>
+            <h4>Aprovação</h4>
+            <p>Tudo nasce como rascunho e espera aprovação. É aqui que o adulto vê a prévia e decide se aquilo chega ou não à criança.</p>
+          </div>
+        </article>
+
+        <article class="rail-card">
+          <div class="rail-frame rail-frame-web">
+            <img src="assets/app/teo-catalogo.webp"
+                 alt="Catálogo de atividades publicadas por outros adultos."
+                 width="600" height="1006" loading="lazy" decoding="async" />
+          </div>
+          <div class="rail-cap">
+            <span class="rail-n">07</span>
+            <h4>Catálogo</h4>
+            <p>Atividades que outras famílias criaram e decidiram compartilhar. Copiar traz a atividade para a conta, já revisada por quem publicou.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="wrap">
+
+
+      <div class="integ-features">
+        <article class="feat">
+          <h4>Base de conhecimento curada</h4>
+          <p>As respostas vêm de documentos revisados, e cada uma cita de onde saiu.</p>
+        </article>
+        <article class="feat">
+          <h4>PIN com limite de tentativas</h4>
+          <p>Cinco erros bloqueiam o acesso por dois minutos. A área do adulto não se abre por tentativa e erro.</p>
+        </article>
+        <article class="feat">
+          <h4>A IA não toca no banco</h4>
+          <p>Ela só age por ferramentas validadas, em nome do adulto, com as mesmas regras da API.</p>
+        </article>
+        <article class="feat">
+          <h4>Sessão que expira</h4>
+          <p>O acesso dura no máximo oito horas após o PIN, e fechar a aba encerra a sessão.</p>
+        </article>
+      </div>
+
+    </div>
+
+    <div class="wrap">
+      <article class="project-next" aria-label="Próximo projeto, ainda em definição">
+        <div class="project-id">
+          <h3>O próximo</h3>
+          <p>Ainda não existe. Quando existir, ocupa este lugar — mesma estrutura, mesmas partes, mesmas telas reais.</p>
+          <span class="project-next-k">Em definição</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
 
 
   <!-- ═══ ECOSSISTEMA ══════════════════════════════════════ -->
   <section id="ecossistema" aria-labelledby="eco-heading">
+    <div class="sec-mark">
+      <span class="sec-mark-t">Soluções</span>
+      <span class="sec-mark-rule" aria-hidden="true"></span>
+    </div>
+
     <div class="wrap">
       <div class="eco-section-head">
         <h2 id="eco-heading">Nossas soluções</h2>
-        <span>PORTFÓLIO // 03 FRENTES</span>
+        <span data-scramble>PORTFÓLIO // 03 FRENTES</span>
       </div>
       <div class="eco-list" id="eco-list">
-        <div class="eco-item">
+        <article class="eco-item">
           <span class="eco-item-num">01</span>
-          <span class="eco-item-title">Aplicativos Móveis Premium</span>
-          <p class="eco-item-desc">Soluções nativas iOS e Android, fluidas e com design intuitivo. Construídas para reter, engajar e aproximar marcas e usuários.</p>
+          <h3 class="eco-item-title">Aplicativos Móveis Premium</h3>
+          <div class="eco-item-body">
+            <p class="eco-item-desc">Soluções nativas iOS e Android, fluidas e com design intuitivo. Construídas para reter, engajar e aproximar marcas e usuários.</p>
+            <ul class="eco-stack" role="list">
+              <li>React Native</li>
+              <li>Expo</li>
+              <li>TypeScript</li>
+            </ul>
+          </div>
           <span class="eco-item-arrow" aria-hidden="true">&#x2192;</span>
-        </div>
-        <div class="eco-item">
+        </article>
+        <article class="eco-item">
           <span class="eco-item-num">02</span>
-          <span class="eco-item-title">Plataformas Web de Alta Performance</span>
-          <p class="eco-item-desc">Sites e sistemas robustos baseados na nuvem, criados para escalar sob demanda sem travamentos ou lentidão.</p>
+          <h3 class="eco-item-title">Plataformas Web de Alta Performance</h3>
+          <div class="eco-item-body">
+            <p class="eco-item-desc">Sites e sistemas robustos baseados na nuvem, criados para escalar sob demanda sem travamentos ou lentidão.</p>
+            <ul class="eco-stack" role="list">
+              <li>HTML &amp; CSS</li>
+              <li>JavaScript</li>
+              <li>GSAP</li>
+            </ul>
+          </div>
           <span class="eco-item-arrow" aria-hidden="true">&#x2192;</span>
-        </div>
-        <div class="eco-item">
+        </article>
+        <article class="eco-item">
           <span class="eco-item-num">03</span>
-          <span class="eco-item-title">Infraestrutura SaaS com Suporte Contínuo</span>
-          <p class="eco-item-desc">Modelo SaaS completo: infraestrutura, segurança, atualizações e suporte. Você foca nos resultados, a Iment cuida do resto.</p>
+          <h3 class="eco-item-title">Infraestrutura SaaS com Suporte Contínuo</h3>
+          <div class="eco-item-body">
+            <p class="eco-item-desc">Modelo SaaS completo: infraestrutura, segurança, atualizações e suporte. Você foca nos resultados, a Iment cuida do resto.</p>
+            <ul class="eco-stack" role="list">
+              <li>Java</li>
+              <li>Spring Boot</li>
+              <li>PostgreSQL</li>
+              <li>JWT</li>
+            </ul>
+          </div>
           <span class="eco-item-arrow" aria-hidden="true">&#x2192;</span>
-        </div>
+        </article>
       </div>
     </div>
   </section>
 
 
-  <!-- ═══ INTEGRAMENTE ════════════════════════════════════ -->
-  <section id="integramente" aria-labelledby="integ-heading">
-    <div class="integ-grid">
-      <div class="integ-content">
-        <span class="integ-label">Inovação Social</span>
-        <h2 id="integ-heading">O app que prova que tecnologia também transforma vidas.</h2>
-        <p>O Integramente é um aplicativo móvel SaaS desenvolvido para apoiar pessoas autistas, suas famílias e terapeutas com rotinas, comunicação alternativa e acompanhamento de progresso.</p>
-        <div class="integ-quote">
-          <p>A tecnologia só é verdadeiramente inteligente quando gera acessibilidade e conexão.</p>
-        </div>
-        <p>É o reflexo do DNA da Iment: ideias inovadoras transformadas em aplicativos impecáveis, com escala garantida pelo modelo SaaS.</p>
+  <!-- ═══ PROCESSO ═════════════════════════════════════════ -->
+  <section id="processo" aria-labelledby="processo-heading">
+    <div class="sec-mark">
+      <span class="sec-mark-t">Processo</span>
+      <span class="sec-mark-rule" aria-hidden="true"></span>
+    </div>
+
+    <div class="wrap">
+      <div class="eco-section-head">
+        <h2 id="processo-heading">Como trabalhamos</h2>
+        <span data-scramble>MÉTODO // 04 ETAPAS</span>
       </div>
-      <div class="phone-wrap" aria-hidden="true">
-        <div class="phone-outer">
-          <div class="phone">
-            <div class="ph-status"><div class="ph-notch"></div></div>
-            <div class="ph-screen">
-              <div class="ph-header">
-                <span class="ph-title">Integramente</span>
-                <div class="ph-avatar">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <circle cx="7" cy="4.5" r="2.5" stroke="white" stroke-width="1.2"/>
-                    <path d="M1.5 13c0-3 2.5-5 5.5-5s5.5 2 5.5 5" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-              </div>
-              <div class="ph-section-label">Rotina de hoje</div>
-              <div class="ph-card">
-                <div class="ph-card-dot" style="background: oklch(0.55 0.22 248 / 0.4)"></div>
-                <div class="ph-card-info">
-                  <div class="ph-card-name">Terapia ABA - Manha</div>
-                  <div class="ph-card-time">08:00 · 60min</div>
-                </div>
-                <div class="ph-card-check done">
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2 2 4-4" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-              </div>
-              <div class="ph-card">
-                <div class="ph-card-dot" style="background: oklch(0.55 0.18 165 / 0.4)"></div>
-                <div class="ph-card-info">
-                  <div class="ph-card-name">Comunicacao alternativa</div>
-                  <div class="ph-card-time">10:30 · 45min</div>
-                </div>
-                <div class="ph-card-check"></div>
-              </div>
-              <div class="ph-card">
-                <div class="ph-card-dot" style="background: oklch(0.58 0.20 290 / 0.4)"></div>
-                <div class="ph-card-info">
-                  <div class="ph-card-name">Atividade de lazer</div>
-                  <div class="ph-card-time">14:00 · 30min</div>
-                </div>
-                <div class="ph-card-check"></div>
-              </div>
-              <div class="ph-section-label" style="margin-top:12px">Progresso semanal</div>
-              <div style="padding: 1px 0 0">
-                <div class="ph-prog-row">
-                  <span>Comunicacao</span>
-                  <span style="color: var(--primary)">72%</span>
-                </div>
-                <div class="ph-prog-track"><div class="ph-prog-fill" data-width="72" style="background: var(--primary)"></div></div>
-                <div class="ph-prog-row">
-                  <span>Rotina</span>
-                  <span style="color: oklch(0.55 0.18 165)">88%</span>
-                </div>
-                <div class="ph-prog-track"><div class="ph-prog-fill" data-width="88" style="background: oklch(0.55 0.18 165)"></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+      <div class="steps-rail" aria-hidden="true">
+        <span class="steps-rail-fill" id="steps-rail-fill"></span>
       </div>
+
+      <ol class="steps" id="steps" role="list">
+        <li class="step">
+          <span class="step-num">01</span>
+          <h3>Diagnóstico</h3>
+          <p>Entendemos o ambiente antes de escrever a primeira linha. Quem usa, o que já existe, o que precisa mudar e o que não deve ser tocado.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">02</span>
+          <h3>Arquitetura</h3>
+          <p>Definimos a base que vai sustentar o crescimento: separação em camadas, contrato de API e modelo de dados pensados para durar.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">03</span>
+          <h3>Construção</h3>
+          <p>Entregas incrementais, revisadas uma a uma. Cada mudança passa por revisão de código antes de chegar à produção.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">04</span>
+          <h3>Operação</h3>
+          <p>Infraestrutura, segurança, atualizações e suporte. O software continua vivo depois da entrega — é aí que o modelo SaaS prova seu valor.</p>
+        </li>
+      </ol>
     </div>
   </section>
 
 
   <!-- ═══ PARCERIA ═════════════════════════════════════════ -->
   <section id="parceria" aria-labelledby="parceria-heading">
+    <div class="sec-mark">
+      <span class="sec-mark-t">Parceria</span>
+      <span class="sec-mark-rule" aria-hidden="true"></span>
+    </div>
+
     <div class="parceria-inner">
       <div class="parceria-head">
         <h2 id="parceria-heading">Por que escolher a Iment como parceira de inovação</h2>
-        <p>Não vendemos codigo. Construímos ecossistemas com visão de longo prazo.</p>
+        <p>Não vendemos código. Construímos ecossistemas com visão de longo prazo.</p>
       </div>
       <div class="reasons-grid">
         <div class="reason">
@@ -277,7 +706,7 @@
         <div class="reason">
           <span class="reason-num" data-target="3">03</span>
           <h3>Parceiro Estratégico</h3>
-          <p>Não um fornecedor de codigo. Um parceiro com visão de futuro focado no crescimento real do seu negócio.</p>
+          <p>Não um fornecedor de código. Um parceiro com visão de futuro focado no crescimento real do seu negócio.</p>
         </div>
       </div>
     </div>
@@ -286,6 +715,11 @@
 
   <!-- ═══ FAQ ══════════════════════════════════════════════ -->
   <section id="faq" aria-labelledby="faq-heading">
+    <div class="sec-mark">
+      <span class="sec-mark-t">Dúvidas</span>
+      <span class="sec-mark-rule" aria-hidden="true"></span>
+    </div>
+
     <div class="faq-inner">
       <h2 id="faq-heading">Perguntas frequentes</h2>
       <div class="faq-item">
@@ -327,10 +761,15 @@
 
   <!-- ═══ CTA FINAL ════════════════════════════════════════ -->
   <section id="contato" aria-labelledby="cta-heading">
+    <div class="sec-mark">
+      <span class="sec-mark-t">Contato</span>
+      <span class="sec-mark-rule" aria-hidden="true"></span>
+    </div>
+
     <h2 id="cta-heading">Pronto para aumentar seu ambiente?</h2>
     <p>Conecte-se com a Iment e descubra como transformamos ideias inovadoras em ecossistemas reais.</p>
     <div class="btn-magnetic-wrap" style="display:inline-block">
-      <a href="mailto:inovacao@iment.com" class="btn btn-fill btn-lg">Falar com um Especialista</a>
+      <a href="mailto:inovacao@iment.com" class="btn btn-fill btn-lg">Mandar um e-mail</a>
     </div>
   </section>
 
@@ -356,10 +795,10 @@
   </footer>
 
   <!-- ═══ SCRIPTS ══════════════════════════════════════════ -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"
-          onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js'"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"
-          onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js'"></script>
+  <!-- GSAP vem do projeto, nao de CDN: assim as animacoes rodam offline e
+       em rede que bloqueia dominio externo. -->
+  <script src="src/vendor/gsap.min.js"></script>
+  <script src="src/vendor/ScrollTrigger.min.js"></script>
   <script src="src/main.js"></script>
 </body>
 </html>
